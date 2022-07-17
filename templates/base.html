@@ -14,7 +14,7 @@
     <script defer src="{% static "/base/base.js" %}"></script>
     {% block scripts %}{% endblock %}
 </head>
-<body style="background-color: #2C2F33; {% block content-css %}{% endblock %}">
+<body style="{% block content-css %}{% endblock %}">
     <nav id="navbar">
         <button id="sidebar-button" onclick="open_sidebar()"><span class="material-icons-outlined">menu</span></button>
         <input type="image" onclick="window.location='/';" id="main-logo" src="{% static "/base/images/logo.png" %}" alt="Donvale Christian College">
@@ -47,12 +47,14 @@
         </script>
     {% endif %}
     <div id="sidebar">
-        <a href="/auth/login" class="text-nowrap">Login</a>
         {% if request.user.is_authenticated %}
-            <a href="/auth/logout" class="position-absolute bottom-0 mb-3 text-danger text-nowrap">Logout</a>
+            <a href="/dashboard/" class="text-nowrap">Dashboard</a>
+            <a href="/auth/logout/" class="position-absolute bottom-0 mb-3 text-danger text-nowrap">Logout</a>
+        {% else %}
+            <a href="/auth/login/" class="text-nowrap">Login</a>
         {% endif %}
     </div>
-    <div id="container" style="padding: 50px">
+    <div id="container">
         {% block content %}
         {% endblock %}
     </div>

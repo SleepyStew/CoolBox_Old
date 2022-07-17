@@ -1,0 +1,8 @@
+#timetable-item-container {
+    display: inline-grid;
+}
+#upcomingduework {
+    display: inline flow-root;
+    padding-left: 5px;
+    max-width: fit-content;
+}

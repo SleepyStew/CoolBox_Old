@@ -1,6 +1,13 @@
+body {
+    background-color: #2C2F33;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
 #navbar {
     background-color: #5865F2;
-    height: 80px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,8 +31,8 @@
     align-items: center;
     justify-content: center;
 }
-#navbar-button:hover {
-    color: #d7d7d7;
+#sidebar-button:hover {
+    color: #cacaca;
 }
 #sidebar-button span {
     font-size: 28px;
@@ -34,8 +41,6 @@
     width: 100%;
     margin-top: auto;
     text-align: center;
-    position: absolute;
-    bottom: 0;
 }
 #footer p {
     color: #6c757d;
@@ -64,4 +69,44 @@
 /* When you mouse over the navigation links, change their color */
 #sidebar a:hover {
     color: #f1f1f1;
+}
+#container {
+    padding: 50px;
+    max-width: 80vw !important;
+    width: 100vw;
+    margin-right: auto;
+    margin-left: auto;
+}
+.gradient-0 {
+  color: var(--bs-red);
+}
+.gradient-1 {
+  color: var(--bs-red);
+}
+.gradient-2 {
+  color: var(--bs-orange);
+}
+.gradient-3 {
+  color: var(--bs-yellow);
+}
+.gradient-4 {
+  color: var(--bs-yellow);
+}
+.gradient-5 {
+  color: var(--bs-yellow);
+}
+.gradient-6 {
+  color: var(--bs-yellow);
+}
+.gradient-7 {
+  color: var(--bs-teal);
+}
+.gradient-8 {
+  color: var(--bs-teal);
+}
+.gradient-9 {
+  color: var(--bs-green);
+}
+.gradient-10 {
+  color: var(--bs-green);
 }

@@ -14,10 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
 
+from . import root
+
 urlpatterns = [
+    path('', root.root),
     path('auth/', include('schoolboxauth.urls')),
-    path('', include('dashboard.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
+def error_404(request, exception):
+    return redirect('/')
+
+
+handler404 = 'CoolBox.urls.error_404'
