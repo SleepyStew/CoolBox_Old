@@ -53,7 +53,7 @@
             <a href="/discussion/" class="text-nowrap {% if request.path == "/discussion/" %}active-icon{% endif %}" title="Discussion"><span class="material-icons-outlined">textsms</span></a>
             <a href="/reminders/" class="text-nowrap {% if request.path == "/reminders/" %}active-icon{% endif %}" title="Reminders"><span class="material-icons-outlined">notifications_active</span></a>
             <a href="/information/" class="text-nowrap {% if request.path == "/information/" %}active-icon{% endif %}" title="Information"><span class="material-icons-outlined">info</span></a>
-            <a href="/auth/logout/" class="position-absolute bottom-0 mb-2 text-danger" title="Logout"><span class="material-icons-outlined">logout</span></a>
+            <a href="/auth/logout/" id="logout-button" class="text-danger text-nowrap" title="Logout"><span class="material-icons-outlined">logout</span></a>
         {% else %}
             <a href="/auth/login/" class="text-nowrap {% if request.path == "/auth/login/" %}active-icon{% endif %}" title="Login"><span class="material-icons-outlined">login</span></a>
             <a href="/information/" class="text-nowrap {% if request.path == "/information/" %}active-icon{% endif %}" title="Information"><span class="material-icons-outlined">info</span></a>

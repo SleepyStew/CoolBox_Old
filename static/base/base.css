@@ -38,9 +38,13 @@ body {
     left: 0;
     background-color: #23272A;
     padding-top: 15px;
+    padding-bottom: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+#logout-button {
+    margin-top: auto;
 }
 #sidebar a {
     padding: 10px;
@@ -52,6 +56,16 @@ body {
     color: white;
     transition: 0.5s;
     border: transparent solid 3px;
+}
+#sidebar a span:after {
+    display: block;
+    content: '';
+    border-bottom: #0d6efd solid 3px !important;
+    transform: scaleX(0);
+    transition: transform 150ms ease-in-out;
+}
+#sidebar a span:hover:after {
+    transform: scaleX(1);
 }
 #sidebar a span {
     font-size: 28px;
