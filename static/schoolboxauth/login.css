@@ -1,0 +1,14 @@
+#login-button {
+    background-color: #5865F2;
+    border-color: #5865F2
+}
+.auth-input {
+    background-size: 18px !important;
+    background-position: 97% !important;
+    background-color: #23272A !important;
+}
+#auth-form {
+    background-color: #23272A;
+    max-width: 650px;
+    border-radius: 10px;
+}
