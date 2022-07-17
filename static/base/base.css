@@ -11,31 +11,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 70px;
 }
 #main-logo {
     position: absolute;
     left:50%;
-    transform: translate(-50%, 0);
+    transform: translate(calc(-50% + 2vw), 0);
     width: 50px;
     height: auto;
-}
-#sidebar-button {
-    display: flex;
-    height: 60px;
-    width: 60px;
-    margin-left: 5px;
-    color: white;
-    background-color: #5865F2;
-    border: none;
-    transition: 0.5s;
-    align-items: center;
-    justify-content: center;
-}
-#sidebar-button:hover {
-    color: #cacaca;
-}
-#sidebar-button span {
-    font-size: 28px;
 }
 #footer {
     width: 100%;
@@ -46,29 +29,36 @@ body {
     color: #6c757d;
 }
 #sidebar {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    height: 100%;
+    width: 4vw;
+    min-width: 55px;
+    position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
-    background-color: #23272A; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 16px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    background-color: #23272A;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #sidebar a {
-    padding: 8px 8px 8px 32px;
+    padding: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    font-size: 25px;
     color: white;
-    display: block;
-    transition: 0.3s;
+    transition: 0.5s;
+    border: transparent solid 3px;
 }
-
-/* When you mouse over the navigation links, change their color */
-#sidebar a:hover {
-    color: #f1f1f1;
+#sidebar a span {
+    font-size: 28px;
+}
+.active-icon {
+    border-left: #6610f2 solid 3px !important;
+    border-radius: 3px;
 }
 #container {
     padding: 50px;

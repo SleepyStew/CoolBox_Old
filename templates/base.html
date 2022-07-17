@@ -16,9 +16,7 @@
 </head>
 <body style="{% block content-css %}{% endblock %}">
     <nav id="navbar">
-        <button id="sidebar-button" onclick="open_sidebar()"><span class="material-icons-outlined">menu</span></button>
         <input type="image" onclick="window.location='/';" id="main-logo" src="{% static "/base/images/logo.png" %}" alt="Donvale Christian College">
-        <div></div>
     </nav>
     {% if messages %}
         {% for message in messages %}
@@ -48,12 +46,17 @@
     {% endif %}
     <div id="sidebar">
         {% if request.user.is_authenticated %}
-            <a href="/dashboard/" class="text-nowrap">Dashboard</a>
-            <a href="/information/" class="text-nowrap">Information</a>
-            <a href="/auth/logout/" class="position-absolute bottom-0 mb-3 text-danger text-nowrap">Logout</a>
+            <a href="/dashboard/" class="text-nowrap {% if request.path == "/dashboard/" %}active-icon{% endif %}" title="Dashboard"><span class="material-icons-outlined">space_dashboard</span></a>
+            <a href="/quick-notes/" class="text-nowrap {% if request.path == "/quick-notes/" %}active-icon{% endif %}" title="Quick Notes" style="margin-left: 7px"><span class="material-icons-outlined">edit_note</span></a>
+            <a href="/assessments/" class="text-nowrap {% if request.path == "/assessments/" %}active-icon{% endif %}" title="Assessments"><span class="material-icons-outlined">assignment</span></a>
+            <a href="/homework/" class="text-nowrap {% if request.path == "/homework/" %}active-icon{% endif %}" title="Homework"><span class="material-icons-outlined">add_home_work</span></a>
+            <a href="/discussion/" class="text-nowrap {% if request.path == "/discussion/" %}active-icon{% endif %}" title="Discussion"><span class="material-icons-outlined">textsms</span></a>
+            <a href="/reminders/" class="text-nowrap {% if request.path == "/reminders/" %}active-icon{% endif %}" title="Reminders"><span class="material-icons-outlined">notifications_active</span></a>
+            <a href="/information/" class="text-nowrap {% if request.path == "/information/" %}active-icon{% endif %}" title="Information"><span class="material-icons-outlined">info</span></a>
+            <a href="/auth/logout/" class="position-absolute bottom-0 mb-2 text-danger" title="Logout"><span class="material-icons-outlined">logout</span></a>
         {% else %}
-            <a href="/auth/login/" class="text-nowrap">Login</a>
-            <a href="/information/" class="text-nowrap">Information</a>
+            <a href="/auth/login/" class="text-nowrap {% if request.path == "/auth/login/" %}active-icon{% endif %}" title="Login"><span class="material-icons-outlined">login</span></a>
+            <a href="/information/" class="text-nowrap {% if request.path == "/information/" %}active-icon{% endif %}" title="Information"><span class="material-icons-outlined">info</span></a>
         {% endif %}
     </div>
     <div id="container">
