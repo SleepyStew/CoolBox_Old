@@ -49,9 +49,11 @@
     <div id="sidebar">
         {% if request.user.is_authenticated %}
             <a href="/dashboard/" class="text-nowrap">Dashboard</a>
+            <a href="/information/" class="text-nowrap">Information</a>
             <a href="/auth/logout/" class="position-absolute bottom-0 mb-3 text-danger text-nowrap">Logout</a>
         {% else %}
             <a href="/auth/login/" class="text-nowrap">Login</a>
+            <a href="/information/" class="text-nowrap">Information</a>
         {% endif %}
     </div>
     <div id="container">

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block content %}
+    <h1 class="text-light">Information</h1>
+    <br>
+    <h4 class="text-light">Authentication System Information</h4>
+    <pre class="text-light fs-7">
+        - This website uses the public Schoolbox API to authenticate and login a user.
+        - No Schoolbox credentials (excluding fullname and authentication cookie) are logged or stored.
+        - To access relevant data from Schoolbox it uses an authentication cookie provided by Schoolbox that expires after at most 3 days.
+        - Logging in through this website should not effect your authentication status on Schoolbox.
+    </pre>
+    <p class="fs-4 text-light">The source code to the project can be found <a class="fs-4" href="https://github.com/SleepyStew/CoolBox" target="_blank">here</a>.</p>
+{% endblock %}

@@ -13,8 +13,8 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('/')
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         print("test")
 

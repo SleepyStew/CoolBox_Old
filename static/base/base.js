@@ -8,7 +8,7 @@ function open_sidebar() {
     } else {
         sidebar_open = false;
         document.getElementById("sidebar").style.width = "0";
-        document.getElementById("sidebar-button").style.marginLeft = "0";
+        document.getElementById("sidebar-button").style.marginLeft = "5px";
     }
 }
 
@@ -17,7 +17,7 @@ function close_sidebar(event) {
         event.stopPropagation();
         sidebar_open = false;
         document.getElementById("sidebar").style.width = "0";
-        document.getElementById("sidebar-button").style.marginLeft = "0"
+        document.getElementById("sidebar-button").style.marginLeft = "5px"
     }
 }
 

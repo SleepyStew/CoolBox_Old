@@ -87,6 +87,5 @@ def get_timetable(response, current_user):
             elements.append(tag)
 
     if len(elements) == 0:
-        return []
-
+        return None
     return map(str, elements)

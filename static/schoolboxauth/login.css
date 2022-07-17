@@ -12,3 +12,7 @@
     max-width: 650px;
     border-radius: 10px;
 }
+#auth-info {
+    text-decoration: none;
+    display: block;
+}
