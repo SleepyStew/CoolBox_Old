@@ -16,19 +16,12 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        print("test")
-
         request_data = {
             'username': username.replace(" ", "."),
             'password': password
         }
 
         login_request = requests.post("https://schoolbox.donvale.vic.edu.au/api/session", data=request_data)
-
-        print("test1")
-
-        print(username)
-        print(password)
 
         if login_request.status_code == 400 or login_request.status_code == 401:
             messages.error(request, "Incorrect username or password.")
@@ -40,11 +33,9 @@ def login(request):
             if user:
                 user.cookie = str(login_request.cookies.get('PHPSESSID'))
                 user.username = username
-                print("hey12")
                 user.save()
             else:
                 user = User(id=id, cookie=str(login_request.cookies.get('PHPSESSID')), name=name)
-                print("hey")
                 user.save()
 
             auth_login(request, user)
