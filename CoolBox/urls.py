@@ -23,6 +23,7 @@ urlpatterns = [
     path('', root.root),
     path('auth/', include('schoolboxauth.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('quick-notes/', include('quicknotes.urls')),
     path('information/', include('information.urls')),
     path('admin/', admin.site.urls),
 ]
