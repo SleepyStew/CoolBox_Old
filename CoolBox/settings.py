@@ -27,6 +27,8 @@ SECRET_KEY = environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(environ.get("DEBUG")))
 
+CSRF_TRUSTED_ORIGINS = ['https://new.coolbox.lol']
+
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
