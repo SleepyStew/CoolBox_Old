@@ -16,7 +16,11 @@ def dashboard(request):
     response = requests.get("https://schoolbox.donvale.vic.edu.au", cookies=cookies)
     duework = get_upcoming_due_work(response, request.user)
     timetable = get_timetable(response, request.user)
-    return render(request, 'dashboard/dashboard.html', context={'duework': duework, 'timetable': timetable})
+    timetable_headers = ["<div class=\"timetable-top\">Homegroup<br>8:40am-8:55am</div>", "<div class=\"timetable-top\">Period 1<br>9:00am-10:10am</div>",
+                         "<div class=\"timetable-top\">Period 2<br>10:30am-11:40am</div>", "<div class=\"timetable-top\">Period 3<br>11:45am-12:55pm</div>",
+                         "<div class=\"timetable-top\">Period 4<br>1:50pm-3:05pm</div>"]
+    ziptable = zip(timetable, timetable_headers)
+    return render(request, 'dashboard/dashboard.html', context={'duework': duework, 'timetable': ziptable})
 
 
 def get_upcoming_due_work(response, current_user):
@@ -58,7 +62,7 @@ def get_upcoming_due_work(response, current_user):
             elements.append(tag)
         if len(elements) == 0:
             return None
-        return map(str, elements)
+        return list(map(str, elements))
     except AttributeError:
         return None
 
@@ -83,9 +87,9 @@ def get_timetable(response, current_user):
         try:
             tag.find_all()[0]['href'] = "https://schoolbox.donvale.vic.edu.au" + tag.find_all()[0]['href']
             elements.append(tag)
-        except AttributeError:
+        except:
             elements.append(tag)
 
     if len(elements) == 0:
         return None
-    return map(str, elements)
+    return list(map(str, elements))
