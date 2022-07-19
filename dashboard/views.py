@@ -2,6 +2,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from schoolboxauth.models import User
+from schoolboxauth.views import logout
 import bs4
 from .constants import friendly_subject_names
 
@@ -14,6 +15,8 @@ def dashboard(request):
         'PHPSESSID': f'{request.user.cookie}',
     }
     response = requests.get("https://schoolbox.donvale.vic.edu.au", cookies=cookies)
+    if check_logout(response):
+        logout(request)
     duework = get_upcoming_due_work(response, request.user)
     timetable = get_timetable(response, request.user)
     timetable_headers = ["<div class=\"timetable-top\">Homegroup<br>8:40am-8:55am</div>", "<div class=\"timetable-top\">Period 1<br>9:00am-10:10am</div>",
@@ -93,3 +96,9 @@ def get_timetable(response, current_user):
     if len(elements) == 0:
         return None
     return list(map(str, elements))
+
+
+def check_logout(request):
+    if "userNameInput.placeholder = 'Sample.User@donvale.vic.edu.au';" in request.text:
+        return True
+    return False
