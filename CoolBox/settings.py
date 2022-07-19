@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from os import path, environ
 from pathlib import Path
+
+from django.contrib.admin import autodiscover
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -34,16 +36,16 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'schoolboxauth',
+    'dashboard',
+    'quicknotes',
+    'information',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'schoolboxauth',
-    'dashboard',
-    'quicknotes',
-    'information',
 ]
 
 AUTH_USER_MODEL = 'schoolboxauth.User'

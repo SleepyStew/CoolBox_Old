@@ -2,9 +2,47 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block stylesheets %}
+    <link rel="stylesheet" href="{% static "/quicknotes/quicknotes.css" %}">
 {% endblock %}
 {% block scripts %}
+    <script defer src="{% static "/quicknotes/quicknotes.js" %}"></script>
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/latest/dist/showdown.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        axios.defaults.xsrfCookieName = 'csrftoken'
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+    </script>
 {% endblock %}
 {% block content %}
     <h1 class="text-light fw-bold">Quick Notes</h1>
+    <ul class="list-group list-group-flush d-block" id="notes">
+        <div class="draggingContainer">
+            {% for note in notes %}
+                <p style="display: none;" id="note-plain-{{ note.id }}">{{ note.content }}</p>
+                <li class="list-group-item rounded-2 my-2 text-break" id="{{ note.id }}">
+                    <script>
+                        var converter = new showdown.Converter();
+                        converter.setOption('simpleLineBreaks', true)
+                        document.getElementById('{{ note.id }}').innerHTML = converter.makeHtml(document.getElementById('note-plain-{{ note.id }}').innerHTML);
+                        document.getElementById('{{ note.id }}').lastChild.style.display = 'inline';
+                    </script>
+                    <div id="note-icons" class="position-absolute end-0" style="transform: translate(0px, -24px)">
+                        <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0 rearrange-button" draggable="true"><span class="material-icons-outlined note-icon">drag_indicator</span></button>
+                        <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0" onClick="editNote({{ note.id }})"><span class="material-icons-outlined note-icon">edit</span></button>
+                        <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0" onClick="deleteConfirm('{{ note.id }}')"><span class="material-icons-outlined note-icon">delete</span></button>
+
+                        <button type="button" class="hiddendefault-{{ note.id }} bg-transparent border-0" style="display: none;" onClick="deleteNote('{{ note.id }}')"><span class="material-icons-outlined note-icon">done</span></button>
+                        <button type="button" class="hiddendefault-{{ note.id }} bg-transparent border-0" style="display: none;" title="Cancel" onClick="cancelDelete('{{ note.id }}')"><span class="material-icons-outlined note-icon">close</span></button>
+                    </div>
+                </li>
+            {% endfor %}
+        </div>
+    </ul>
+<form method="POST" class="mt-2" action="create">
+    {% csrf_token %}
+    <textarea name="content" class="form-control" id="note" placeholder="Enter your new note here..." maxlength=1024></textarea>
+    <div align="center">
+        <button type="submit" class="btn btn-primary mt-3">Add Note</button>
+    </div>
+</form>
 {% endblock %}
