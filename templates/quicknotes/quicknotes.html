@@ -6,8 +6,8 @@
 {% endblock %}
 {% block scripts %}
     <script defer src="{% static "/quicknotes/quicknotes.js" %}"></script>
-    <script defer src="{% static "/packages/axios/axios.min.js" %}"></script>
-    <script defer src="{% static "/packages/showdown/showdown.min.js" %}"></script>
+    <script src="{% static "/packages/axios/axios.min.js" %}"></script>
+    <script src="{% static "/packages/showdown/showdown.min.js" %}"></script>
     <script type="text/javascript">
         axios.defaults.xsrfCookieName = 'csrftoken'
         axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
