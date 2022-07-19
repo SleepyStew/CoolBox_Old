@@ -27,7 +27,7 @@
                         document.getElementById('{{ note.id }}').lastChild.style.display = 'inline';
                     </script>
                     <div id="note-icons" class="position-absolute end-0" style="transform: translate(0px, -24px)">
-                        <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0 rearrange-button" draggable="true"><span class="material-icons-outlined note-icon">drag_indicator</span></button>
+                        <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0 rearrange-button" draggable="true"><span class="material-icons-outlined note-icon">reorder</span></button>
                         <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0" onClick="editNote({{ note.id }})"><span class="material-icons-outlined note-icon">edit</span></button>
                         <button type="button" class="showndefault-{{ note.id }} bg-transparent border-0" onClick="deleteConfirm('{{ note.id }}')"><span class="material-icons-outlined note-icon">delete</span></button>
 
