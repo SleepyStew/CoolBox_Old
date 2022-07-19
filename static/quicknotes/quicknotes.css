@@ -7,3 +7,9 @@
 .list-group-item.dragging {
   opacity: 0.7;
 }
+li button {
+  display: none;
+}
+li:hover button {
+  display: inline;
+}
