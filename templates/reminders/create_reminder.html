@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Reminders | Create{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mx-auto align-bottom text-center p-5" style="background-color: #23272A; max-width: 650px; border-radius: 10px;">
+            <h1 class="text-light fs-3" align="center">Create a new reminder</h1>
+            <div class="input-group pt-4 px-2">
+                <input type="hidden" name="setting_type" value="deleted-messages"></input>
+                <select class="custom-select rounded p-2 text-light fs-5" id="inputGroupSelect04" name="type" style="width: 100%; background-color: #23272A;">
+                  <option value="custom" {% if current_user.setting_deleted_messages == "show" %}selected{% endif %}>Custom Reminder.</option>
+                  <option value="homework" {% if current_user.setting_deleted_messages == "hide" %}selected{% endif %}>Homework Reminder.</option>
+                  <option value="assessment" {% if current_user.setting_deleted_messages == "hide" %}selected{% endif %}>Assessment Reminder.</option>
+                </select>
+            </div>
+            <div class="form-group pt-4 px-2">
+                <input type="text" class="form-control text-white fs-3" id="name" name="name" placeholder="Reminder Name" style="background-color: #23272A;" maxlength=24>
+            </div>
+            <div class="form-group pt-4 px-2">
+                <input type="datetime-local" class="text-light" name="time" style="background-color: #23272A; width: 100%">
+            </div>
+            <button type="submit" class="btn btn-primary mt-4 fs-4" style="background-color: #5865F2; border-color: #5865F2;">
+                Create
+            </button>
+        </div>
+    </form>
+{% endblock %}
