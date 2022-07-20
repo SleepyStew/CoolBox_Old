@@ -25,6 +25,7 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('quick-notes/', include('quicknotes.urls')),
     path('information/', include('information.urls')),
+    path('reminders/', include('reminders.urls')),
     path('admin/', admin.site.urls),
 ]
 

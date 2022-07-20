@@ -2,6 +2,7 @@ friendly_subject_names = {
     "Homegroup": "Homegroup",
     "Art": "Art",
     "ComL": "ComLife",
+    "Community Life": "ComLife",
     "Dram": "Drama",
     "Elec": "Electronics",
     "Eng": "English",
@@ -22,5 +23,4 @@ friendly_subject_names = {
     "Vis": "VisCom",
     "Commerce": "Commerce",
     "Comm": "Commerce",
-    "Community Life": "ComLife"
 }

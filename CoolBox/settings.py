@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'dashboard',
     'quicknotes',
     'information',
+    'reminders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

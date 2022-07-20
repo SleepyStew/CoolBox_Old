@@ -19,6 +19,7 @@ def dashboard(request):
     if check_logout(response):
         messages.error(request, "Your schoolbox session has expired. Please log in again.")
         logout(request)
+        return redirect("/")
     duework = get_upcoming_due_work(response, request.user)
     timetable = get_timetable(response, request.user)
     timetable_headers = ["<div class=\"timetable-top\">Homegroup<br>8:40am-8:55am</div>", "<div class=\"timetable-top\">Period 1<br>9:00am-10:10am</div>",

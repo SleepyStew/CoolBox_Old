@@ -1,24 +1,27 @@
 import json
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Note
 
 # Create your views here.
 
-
+@login_required
 def quicknotes(request):
     notes = request.user.note_set.all().order_by('display_id')
     return render(request, 'quicknotes/quicknotes.html', context={'notes': notes})
 
 
+@login_required
 def create_note(request):
     if request.method == 'POST':
-        note = Note(owner=request.user, content=request.POST.get('content'))
+        note = Note(owner=request.user, content=request.POST.get('content'), display_id=request.user.note_set.all().order_by('display_id').first().display_id - 1)
         note.save()
         return redirect('/quick-notes/')
     return redirect('/')
 
 
+@login_required
 def delete_note(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))
@@ -31,6 +34,7 @@ def delete_note(request):
     return redirect('/quick-notes/')
 
 
+@login_required
 def edit_note(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))
@@ -46,6 +50,7 @@ def edit_note(request):
     return redirect('/quick-notes/')
 
 
+@login_required
 def update_note_order(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))
@@ -57,7 +62,7 @@ def update_note_order(request):
         for x in range(len(request_data['order'])):
             note = Note.objects.get(id=request_data['order'][x])
             if note.owner == request.user:
-                note.display_id = x
+                note.display_id = x + 1
                 note.save()
 
         return redirect('/quick-notes/')
