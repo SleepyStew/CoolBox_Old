@@ -34,9 +34,11 @@ def login(request):
                 user.cookie = str(login_request.cookies.get('PHPSESSID'))
                 user.username = username
                 user.save()
+                messages.success(request, f"Welcome back, {user.name.split(' ')[0]}!")
             else:
                 user = User(id=id, cookie=str(login_request.cookies.get('PHPSESSID')), name=name)
                 user.save()
+                messages.success(request, f"Welcome to the CoolBox Dashboard, {user.name.split(' ')[0]}!")
 
             auth_login(request, user)
             return redirect('/')
