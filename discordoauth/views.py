@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 
@@ -5,4 +6,6 @@ from django.shortcuts import render, redirect
 
 
 def discord_oauth_login(request):
-    return redirect('/')
+    code = request.GET.get('code')
+    print(code)
+    return JsonResponse({'msg': 'Redirected.'})
