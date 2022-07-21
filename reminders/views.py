@@ -46,7 +46,6 @@ def reminder_check():
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
-            print(reminder.due - datetime.now().timestamp())
             if reminder.due < datetime.now().timestamp():
                 reminder.fulfilled = True
                 reminder.save()
