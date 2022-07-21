@@ -5,7 +5,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
-
+from discordoauth.views import get_discord_user
 # Create your views here.
 
 from .models import Reminder
@@ -13,11 +13,17 @@ from .models import Reminder
 
 @login_required
 def reminders(request):
+    discordoauthed = request.user.discordoauth_set.exists()
+    if discordoauthed:
+        discord_user = get_discord_user(request.user)
+        discord_full_name = discord_user['username'] + '#' + discord_user['discriminator']
+    else:
+        return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
         reminder.date = datetime.fromtimestamp(reminder.due).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
-    return render(request, 'reminders/reminders.html', context={'reminders': reminders})
+    return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
 
 
 @login_required
@@ -43,7 +49,8 @@ def reminder_check():
             if reminder.due < time.time():
                 reminder.fulfilled = True
                 reminder.save()
-                requests.get('http://127.0.0.1:5000/?name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title + '&description=' + reminder.description)
+                discord_user = get_discord_user(reminder.owner)
+                requests.get('http://127.0.0.1:5000/?id=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title + '&description=' + reminder.description)
                 print("Reminder: " + reminder.title + " has been fulfilled.")
         time.sleep(10)
 
