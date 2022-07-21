@@ -13,8 +13,6 @@ from .models import Reminder
 
 @login_required
 def reminders(request):
-    print(time.time())
-    print(time.timezone)
     discordoauthed = request.user.discordoauth_set.exists()
     if discordoauthed:
         discord_user = get_discord_user(request.user)
@@ -47,8 +45,8 @@ def reminder_check():
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
-            print(reminder.due - time.time())
-            if reminder.due < time.time():
+            print(reminder.due - datetime.now().timestamp())
+            if reminder.due < datetime.now().timestamp():
                 reminder.fulfilled = True
                 reminder.save()
                 discord_user = get_discord_user(reminder.owner)
