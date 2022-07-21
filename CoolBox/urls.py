@@ -26,6 +26,7 @@ urlpatterns = [
     path('quick-notes/', include('quicknotes.urls')),
     path('information/', include('information.urls')),
     path('reminders/', include('reminders.urls')),
+    path('discord/', include('discordoauth.urls')),
     path('admin/', admin.site.urls),
 ]
 
