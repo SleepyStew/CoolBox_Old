@@ -22,7 +22,7 @@ def reminders(request):
         return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
-        reminder.date = datetime.fromtimestamp(reminder.due).strftime('%H:%M %d/%m/%Y')
+        reminder.date = pytz.timezone('Australia/Melbourne').localize(datetime.fromtimestamp(reminder.due)).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
     return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
 
