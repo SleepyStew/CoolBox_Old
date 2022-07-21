@@ -14,6 +14,8 @@ from .models import Reminder
 
 @login_required
 def reminders(request):
+    print(datetime.now().astimezone(pytz.timezone('Australia/Melbourne')))
+    print(datetime.now())
     discordoauthed = request.user.discordoauth_set.exists()
     if discordoauthed:
         discord_user = get_discord_user(request.user)
