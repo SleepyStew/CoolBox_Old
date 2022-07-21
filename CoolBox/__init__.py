@@ -1,5 +1,5 @@
 import os
 import time
 
-os.environ['TZ'] = 'Europe/London'
+os.environ['TZ'] = 'Australia/Melbourne'
 time.tzset()
