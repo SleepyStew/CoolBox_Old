@@ -1,5 +1,6 @@
 import time
 import threading
+import pytz
 
 import requests
 from django.contrib.auth.decorators import login_required
@@ -32,6 +33,8 @@ def create_reminder(request):
         time = request.POST.get('time')
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
+        print(due)
+        print(pytz.timezone('Australia/Sydney').localize(date).timestamp())
         title = request.POST.get('title')
         description = request.POST.get('description')
         reminder = Reminder(owner=request.user, due=due, title=title, description=description)
