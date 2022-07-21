@@ -22,7 +22,10 @@
                 </select>
             </div>
             <div class="form-group pt-4 px-2">
-                <input type="text" class="form-control text-white fs-3" id="name" name="name" placeholder="Reminder Name" style="background-color: #23272A;" maxlength=24>
+                <input required type="text" class="form-control text-white fs-3" id="title" name="title" placeholder="Reminder Name" style="background-color: #23272A;" maxlength=24>
+            </div>
+            <div class="form-group pt-4 px-2">
+                <textarea class="form-control text-white fs-5" id="description" name="description" placeholder="Reminder Description" style="background-color: #23272A;"></textarea>
             </div>
             <div class="form-group pt-4 px-2" style="position: relative">
                 <input class="form-control text-light" type="text" id="datetime" name="time" style="background-color: #23272A" />
@@ -35,6 +38,7 @@
                         useCurrent: true,
                         stepping: 15,
                         sideBySide: true,
+                        timeZone: 'AEST'
                     });
                 });
             </script>
