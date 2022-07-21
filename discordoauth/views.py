@@ -9,7 +9,7 @@ from .models import DiscordOAuth
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
         return redirect('/')
-    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord%2Foauth%2Fredirect'
+    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=https%3A%2F%2Fnew.coolbox.lol%2Fdiscord%2Foauth%2Fredirect'
                     '&response_type=code&scope=identify')
 
 
@@ -21,7 +21,7 @@ def discord_oauth_redirect(request):
             'client_secret': 'xvwjk5mDMmDdILyxsftqrS67DxQoBZ9t',
             'grant_type': 'authorization_code',
             'code': code,
-            'redirect_uri': 'http://127.0.0.1:8000/discord/oauth/redirect',
+            'redirect_uri': 'https://new.coolbox.lol/discord/oauth/redirect',
             'scope': 'identify',
         }
         headers = {

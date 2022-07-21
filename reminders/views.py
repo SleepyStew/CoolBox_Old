@@ -50,7 +50,8 @@ def reminder_check():
                 reminder.fulfilled = True
                 reminder.save()
                 discord_user = get_discord_user(reminder.owner)
-                requests.get('http://127.0.0.1:5000/?id=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title + '&description=' + reminder.description)
+                requests.get('http://192.168.50.121:30022/?id=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title +
+                             '&description=' + reminder.description)
                 print("Reminder: " + reminder.title + " has been fulfilled.")
         time.sleep(10)
 
