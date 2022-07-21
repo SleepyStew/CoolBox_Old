@@ -11,4 +11,4 @@ class Reminder(models.Model):
     owner = models.ForeignKey('schoolboxauth.User', on_delete=models.CASCADE)
     display_id = models.IntegerField(default=0)
     fulfilled = models.BooleanField(default=False)
-    due = models.IntegerField()
+    due = models.IntegerField(default=0)
