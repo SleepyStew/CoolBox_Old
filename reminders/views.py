@@ -48,7 +48,7 @@ def reminder_check():
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
-            if reminder.due < datetime.now().astimezone(pytz.timezone('Australia/Melbourne')).timestamp():
+            if reminder.due < datetime.now().timestamp():
                 reminder.fulfilled = True
                 reminder.save()
                 discord_user = get_discord_user(reminder.owner)
