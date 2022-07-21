@@ -1,6 +1,5 @@
 import time
 import threading
-import pytz
 
 import requests
 from django.contrib.auth.decorators import login_required
@@ -15,7 +14,7 @@ from .models import Reminder
 @login_required
 def reminders(request):
     print(datetime.now())
-    print(datetime.now().astimezone(pytz.timezone('Australia/Melbourne')))
+    print(datetime.now())
     discordoauthed = request.user.discordoauth_set.exists()
     if discordoauthed:
         discord_user = get_discord_user(request.user)
@@ -24,7 +23,7 @@ def reminders(request):
         return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
-        reminder.date = datetime.fromtimestamp(reminder.due, tz=pytz.timezone('Australia/Melbourne')).strftime('%H:%M %d/%m/%Y')
+        reminder.date = datetime.fromtimestamp(reminder.due).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
     return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
 
