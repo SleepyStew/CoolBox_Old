@@ -14,7 +14,7 @@ from .models import Reminder
 
 @login_required
 def reminders(request):
-    print(datetime.now().astimezone(pytz.timezone('Australia/Melbourne')))
+    print(datetime.now())
     print(datetime.now())
     discordoauthed = request.user.discordoauth_set.exists()
     if discordoauthed:
@@ -24,7 +24,7 @@ def reminders(request):
         return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
-        reminder.date = pytz.timezone('Australia/Melbourne').localize(datetime.fromtimestamp(reminder.due)).strftime('%H:%M %d/%m/%Y')
+        reminder.date = datetime.fromtimestamp(reminder.due).astimezone(pytz.timezone('Australia/Melbourne')).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
     return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
 
@@ -34,7 +34,7 @@ def create_reminder(request):
     if request.method == 'POST':
         time = request.POST.get('time')
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
-        due = pytz.timezone('Australia/Melbourne').localize(date).timestamp()
+        due = date.timestamp()
         title = request.POST.get('title')
         description = request.POST.get('description')
         reminder = Reminder(owner=request.user, due=due, title=title, description=description)
@@ -48,7 +48,7 @@ def reminder_check():
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
-            if reminder.due < datetime.now().timestamp():
+            if reminder.due < datetime.now().astimezone(pytz.timezone('Australia/Melbourne')).timestamp():
                 reminder.fulfilled = True
                 reminder.save()
                 discord_user = get_discord_user(reminder.owner)
