@@ -24,7 +24,7 @@ def reminders(request):
         return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
-        reminder.date = datetime.fromtimestamp(reminder.due).strftime('%H:%M %d/%m/%Y')
+        reminder.date = datetime.fromtimestamp(reminder.due).astimezone(pytz.timezone('Australia/Melbourne')).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
     return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
 
@@ -48,7 +48,7 @@ def reminder_check():
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
-            if reminder.due < datetime.now().astimezone(pytz.timezone('Australia/Melbourne')).timestamp():
+            if reminder.due < datetime.now().timestamp():
                 reminder.fulfilled = True
                 reminder.save()
                 discord_user = get_discord_user(reminder.owner)
