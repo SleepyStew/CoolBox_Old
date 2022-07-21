@@ -35,7 +35,11 @@ def create_reminder(request):
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
         title = request.POST.get('title')
+        if title is None:
+            title = 'No title'
         description = request.POST.get('description')
+        if description is None:
+            description = 'No description'
         reminder = Reminder(owner=request.user, due=due, title=title, description=description)
         reminder.save()
         return redirect('/reminders/')

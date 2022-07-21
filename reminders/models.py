@@ -4,8 +4,8 @@ from django.db import models
 
 
 class Reminder(models.Model):
-    title = models.CharField(max_length=128)
-    description = models.TextField(default="None")
+    title = models.CharField(max_length=48)
+    description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey('schoolboxauth.User', on_delete=models.CASCADE)
