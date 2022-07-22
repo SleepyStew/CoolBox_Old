@@ -9,21 +9,21 @@
 {% block content %}
     <h1 class="text-light fw-bold">Reminders</h1>
     {% if discord_authenticated %}
-        <h5 class="text-light">Reminder alerts will be sent to your discord.</h5>
+        <h5 class="text-light mb-3">Reminder alerts will be sent to your discord.</h5>
         {% for reminder in reminders %}
             {% if not reminder.fulfilled %}
                 <div class="card mb-3">
                     <div class="card-body">
                         <h3 class="card-title">{{ reminder.title }}</h3>
-                        <h5 class="card-text">Description: {{ reminder.description }}</h5>
+                        <h5 class="card-text">{{ reminder.description }}</h5>
                         <h5 class="card-text">Date: {{ reminder.date }}</h5>
                     </div>
                 </div>
             {% endif %}
         {% endfor %}
-        <button onclick="window.location = window.location.pathname + 'create/'" class="btn btn-primary mt-3">Create Reminder</button>
+        <button onclick="window.location = window.location.pathname + 'create/'" class="btn btn-primary">Create Reminder</button>
     {% else %}
-        <h3 class="text-light mt-3">You must authenticate with discord to use reminders.</h3>
+        <h3 class="text-light">You must authenticate with discord to use reminders.</h3>
         <button onclick="window.location = '/discord/'" class="btn btn-primary mt-3">Authenticate</button>
     {% endif %}
 {% endblock %}
