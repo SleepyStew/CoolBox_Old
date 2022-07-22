@@ -23,6 +23,6 @@
         <button onclick="window.location = window.location.pathname + 'create/'" class="btn btn-primary mt-3">Create Reminder</button>
     {% else %}
         <h3 class="text-light mt-3">You must authenticate with discord to use reminders.</h3>
-        <button onclick="window.location = '/discord/oauth/login/'" class="btn btn-primary mt-3">Authenticate</button>
+        <button onclick="window.location = '/discord/'" class="btn btn-primary mt-3">Authenticate</button>
     {% endif %}
 {% endblock %}
