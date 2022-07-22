@@ -36,18 +36,18 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'schoolboxauth',
-    'dashboard',
-    'quicknotes',
-    'information',
-    'reminders',
-    'discordoauth',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'schoolboxauth',
+    'dashboard',
+    'quicknotes',
+    'information',
+    'reminders',
+    'discordoauth',
 ]
 
 AUTH_USER_MODEL = 'schoolboxauth.User'
