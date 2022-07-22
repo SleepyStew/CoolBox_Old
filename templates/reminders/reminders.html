@@ -7,8 +7,8 @@
 {% endblock %}
 {% block content %}
     <h1 class="text-light fw-bold">Reminders</h1>
-    {% if discordoauthed %}
-        <h5 class="text-light">Reminder alerts will be sent to {{ discord_full_name }}</h5>
+    {% if discord_authenticated %}
+        <h5 class="text-light">Reminder alerts will be sent to your discord.</h5>
         {% for reminder in reminders %}
             {% if not reminder.fulfilled %}
                 <div class="card mb-3">

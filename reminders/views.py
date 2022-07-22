@@ -5,27 +5,21 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
-from discordoauth.views import get_discord_user
+from discordoauth.models import DiscordOAuth
 # Create your views here.
+from discordoauth.views import get_discord_user
 
 from .models import Reminder
 
 
 @login_required
 def reminders(request):
-    print(datetime.now())
-    print(datetime.now())
-    discordoauthed = request.user.discordoauth_set.exists()
-    if discordoauthed:
-        discord_user = get_discord_user(request.user)
-        discord_full_name = discord_user['username'] + '#' + discord_user['discriminator']
-    else:
-        return render(request, 'reminders/reminders.html', context={'discordoauthed': discordoauthed})
+    discord_authenticated = request.user.discordoauth_set.exists()
     reminders = []
     for reminder in Reminder.objects.filter(owner=request.user).order_by('due'):
         reminder.date = datetime.fromtimestamp(reminder.due).strftime('%H:%M %d/%m/%Y')
         reminders.append(reminder)
-    return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discordoauthed': discordoauthed, 'discord_full_name': discord_full_name})
+    return render(request, 'reminders/reminders.html', context={'reminders': reminders, 'discord_authenticated': discord_authenticated})
 
 
 @login_required

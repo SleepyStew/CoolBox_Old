@@ -1,11 +1,13 @@
 import requests
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import DiscordOAuth
 
 # Create your views here.
 
 
+@login_required
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
         return redirect('/')
@@ -13,6 +15,7 @@ def discord_oauth_login(request):
                     '&response_type=code&scope=identify')
 
 
+@login_required
 def discord_oauth_redirect(request):
     code = request.GET.get('code')
     if code:
@@ -52,3 +55,26 @@ def get_discord_user(user):
     if discord_user:
         return discord_user
     return False
+
+
+@login_required
+def discord_actions(request):
+    discord_user = get_discord_user(request.user)
+    if discord_user:
+        discord_name = discord_user['username'] + '#' + discord_user['discriminator']
+        return render(request, 'discordoauth/discordactions.html', context={'discord_user': discord_user, 'discord_name': discord_name})
+    return render(request, 'discordoauth/discordactions.html', {'discord_user': discord_user})
+
+
+@login_required
+def discord_invite(request):
+    return redirect('https://discord.com/invite/86f8YEtTa6')
+
+
+@login_required
+def discord_oauth_logout(request):
+    if request.user.discordoauth_set.exists():
+        for discordoauth in request.user.discordoauth_set.all():
+            discordoauth.delete()
+        messages.success(request, "Successfully unlinked Discord account.")
+    return redirect('/discord/')

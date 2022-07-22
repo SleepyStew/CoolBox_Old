@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Discord{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block content %}
+    <h1 class="text-light fw-bold">Discord</h1>
+    {% if discord_user %}
+        <h5 class="text-light">Your account is authenticated with the discord user {{ discord_name }}.</h5>
+    {% else %}
+        <h4 class="text-light">
+            Certain features on CoolBox such as reminders have integration with discord.<br>
+            To use these features you must authenticate with discord and join the discord server.
+        </h4>
+        <a href="/discord/oauth/login/"><button class="btn btn-primary mt-3">Authenticate</button></a>
+    {% endif %}
+    <a href="/discord/invite" target="_blank"><button class="btn btn-primary mt-3">Join Discord Server</button></a>
+    {% if discord_user %}
+        <a href="/discord/oauth/logout/"><button class="btn btn-primary mt-3">Logout</button></a>
+    {% endif %}
+{% endblock %}
