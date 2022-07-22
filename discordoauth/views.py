@@ -44,7 +44,7 @@ def discord_oauth_redirect(request):
         else:
             messages.error(request, "Failed to authenticate with Discord.")
             print(response.text)
-    return redirect('/')
+    return redirect('/discord/')
 
 
 def get_discord_user(user):
