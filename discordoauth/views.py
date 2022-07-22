@@ -60,7 +60,7 @@ def get_discord_user(user):
 @login_required
 def discord_actions(request):
     discord_user = get_discord_user(request.user)
-    if discord_user:
+    if discord_user is not False:
         discord_name = discord_user['username'] + '#' + discord_user['discriminator']
         return render(request, 'discordoauth/discordactions.html', context={'discord_user': discord_user, 'discord_name': discord_name})
     return render(request, 'discordoauth/discordactions.html', {'discord_user': discord_user})

@@ -15,7 +15,9 @@
         {% endif %}
         {% if timetable %}
             <h3 class="text-light">Today's Subjects:</h3>
-            {% for tableitem, tableheader in timetable %}<div id="timetable-item-container">{{ tableheader | safe }}{{ tableitem | safe }}</div>{% endfor %}
+            <div id="timetable-container">
+                 {% for tableitem, tableheader in timetable %}<div class="timetable-item-container">{{ tableheader | safe }}{{ tableitem | safe }}</div>{% endfor %}
+            </div>
         {% else %}
             <h3 class="text-light">No subjects today.</h3>
         {% endif %}

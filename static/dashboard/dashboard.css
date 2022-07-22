@@ -1,5 +1,7 @@
-#timetable-item-container {
-    display: inline-grid;
+.timetable-item-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 #upcomingduework {
     display: inline flow-root;
@@ -8,22 +10,30 @@
 }
 .timetable-top {
     background-color: #F6F6F6;
-    width: 200px;
     padding: 10px;
     margin: 3px;
     display: inline-block;
     height: auto;
     border-radius: 3px;
+    flex: 1;
 }
 .timetable-subject {
-    width: 200px;
     padding: 10px;
     margin: 3px;
     display: inline-block;
     height: auto;
+    flex: 1;
+}
+#timetable-container {
+    display: flex;
+    width: 80%;
 }
 @media only screen and (max-width: 600px) {
-    #timetable-item-container {
-      display: flex !important;
+    .timetable-item-container {
+        flex-direction: row;
+    }
+    #timetable-container {
+        flex-direction: column;
+        width: 100%;
     }
 }
