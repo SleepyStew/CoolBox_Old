@@ -25,6 +25,9 @@ def reminders(request):
 @login_required
 def create_reminder(request):
     if request.method == 'POST':
+        title = request.POST.get('title')
+        if not title:
+            return redirect('/reminders/create')
         time = request.POST.get('time')
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
