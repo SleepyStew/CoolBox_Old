@@ -2,6 +2,7 @@ import time
 import threading
 
 import requests
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
@@ -26,19 +27,17 @@ def reminders(request):
 def create_reminder(request):
     if request.method == 'POST':
         title = request.POST.get('title')
-        if not title:
+        if title == '' or title is None:
             return redirect('/reminders/create')
         time = request.POST.get('time')
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
-        title = request.POST.get('title')
-        if title is None:
-            title = 'No title'
         description = request.POST.get('description')
-        if description is None:
+        if description == '' or description is None:
             description = 'No description'
         reminder = Reminder(owner=request.user, due=due, title=title, description=description)
         reminder.save()
+        messages.success(request, 'Reminder successfully created!')
         return redirect('/reminders/')
     return render(request, 'reminders/create_reminder.html')
 
