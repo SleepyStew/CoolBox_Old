@@ -21,13 +21,14 @@
         {% else %}
             <h3 class="text-light mt-3">No subjects today.</h3>
         {% endif %}
+        <hr>
         {% if duework %}
-            <h3 class="text-light mt-3">Upcoming Due Work:</h3>
+            <h3 class="text-light">Upcoming Due Work:</h3>
             <div id="upcomingduework">
                 {% for dueworkitem in duework %}{{ dueworkitem | safe }}{% endfor %}
             </div>
         {% else %}
-            <h3 class="text-light mt-3">No upcoming due work.</h3>
+            <h3 class="text-light">No upcoming due work.</h3>
         {% endif %}
     </div>
 
