@@ -11,23 +11,23 @@
     <h1 class="text-light fw-bold">Dashboard</h1>
     <div class="ms-3">
         {% if schoolbox_is_down %}
-            <h3 class="text-light pt-3">Schoolbox is currently down. Some features may not function correctly.</h3>
+            <h3 class="text-light mt-3">Schoolbox is currently down. Some features may not function correctly.</h3>
         {% endif %}
         {% if timetable %}
-            <h3 class="text-light">Today's Subjects:</h3>
+            <h3 class="text-light mt-3">Today's Subjects:</h3>
             <div id="timetable-container">
                  {% for tableitem, tableheader in timetable %}<div class="timetable-item-container">{{ tableheader | safe }}{{ tableitem | safe }}</div>{% endfor %}
             </div>
         {% else %}
-            <h3 class="text-light">No subjects today.</h3>
+            <h3 class="text-light mt-3">No subjects today.</h3>
         {% endif %}
         {% if duework %}
-            <h3 class="text-light pt-3">Upcoming Due Work:</h3>
+            <h3 class="text-light mt-3">Upcoming Due Work:</h3>
             <div id="upcomingduework">
                 {% for dueworkitem in duework %}{{ dueworkitem | safe }}{% endfor %}
             </div>
         {% else %}
-            <h3 class="text-light">No upcoming due work.</h3>
+            <h3 class="text-light mt-3">No upcoming due work.</h3>
         {% endif %}
     </div>
 

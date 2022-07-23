@@ -17,7 +17,7 @@ def dashboard(request):
     }
     response = requests.get("https://schoolbox.donvale.vic.edu.au", cookies=cookies)
     if check_logout(response):
-        messages.error(request, "Your schoolbox session has expired. Please log in again.")
+        messages.error(request, "Your Schoolbox session has expired. Please log in again.")
         logout(request)
         return redirect("/")
     duework = get_upcoming_due_work(response, request.user)
