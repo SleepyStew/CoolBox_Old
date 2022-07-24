@@ -29,7 +29,7 @@ def reminders(request):
 
 
 @login_required
-@require_http_methods(["POST"])
+@require_http_methods(["GET", "POST"])
 def create_reminder(request):
     if request.method == 'POST':
         title = request.POST.get('title')
