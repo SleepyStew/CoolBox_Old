@@ -1,3 +1,5 @@
+from os import environ
+
 import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,7 +23,7 @@ def discord_oauth_redirect(request):
     if code:
         data = {
             'client_id': '999205944133177365',
-            'client_secret': 'xvwjk5mDMmDdILyxsftqrS67DxQoBZ9t',
+            'client_secret': environ.get("CLIENT_SECRET"),
             'grant_type': 'authorization_code',
             'code': code,
             'redirect_uri': 'https://new.coolbox.lol/discord/oauth/redirect',
