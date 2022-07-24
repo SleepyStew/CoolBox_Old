@@ -45,6 +45,10 @@ def login(request):
                 messages.success(request, f"Welcome to the CoolBox Dashboard, {user.name.split(' ')[0]}!")
 
             auth_login(request, user)
+
+            if request.GET.get('next'):
+                return redirect(request.GET.get('next'))
+
             return redirect(reverse('root'))
 
     return render(request, 'schoolboxauth/login.html')
