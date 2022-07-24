@@ -2,6 +2,7 @@ import time
 from os import environ
 
 import requests
+import threading
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -120,3 +121,9 @@ def refresh_tokens():
                 print("Refreshed token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
             else:
                 print("Failed to refresh token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
+    time.sleep(60)
+
+
+thread = threading.Thread(target=refresh_tokens)
+thread.setDaemon(True)
+thread.start()
