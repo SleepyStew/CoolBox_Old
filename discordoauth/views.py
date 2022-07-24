@@ -125,6 +125,7 @@ def refresh_tokens():
                     print("Failed to refresh token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
                     discordoauth.delete()
 
+
 thread = threading.Thread(target=refresh_tokens)
 thread.setDaemon(True)
 thread.start()
