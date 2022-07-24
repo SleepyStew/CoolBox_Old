@@ -60,9 +60,9 @@ def get_discord_user(user):
     discordoauth = user.discordoauth_set.first()
     if not discordoauth:
         return False
-    discord_user = requests.get('https://discordapp.com/api/users/@me', headers={'Authorization': 'Bearer ' + discordoauth.access_token}).json()
-    if discord_user:
-        return discord_user
+    discord_user = requests.get('https://discordapp.com/api/users/@me', headers={'Authorization': 'Bearer ' + discordoauth.access_token})
+    if discord_user.status_code == 200:
+        return discord_user.json()
     return False
 
 

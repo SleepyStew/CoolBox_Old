@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'schoolboxauth',
     'dashboard',
     'quicknotes',
@@ -128,13 +129,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 if DEBUG:
-    STATICFILES_DIRS = (
-        path.join(BASE_DIR, "static"),
-    )
+    print("Debug Server")
+    STATIC_ROOT = './static'
 else:
     print("Production Server")
+    COMPRESS_OFFLINE = True
     STATIC_ROOT = BASE_DIR / 'static'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -143,3 +150,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login'
 LOGOUT_REDIRECT_URL = '/auth/login'
+
+COMPRESS_ENABLED = True
