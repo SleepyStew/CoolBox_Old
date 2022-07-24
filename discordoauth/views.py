@@ -115,13 +115,14 @@ def refresh_token(user):
 
 
 def refresh_tokens():
-    for discordoauth in DiscordOAuth.objects.all():
-        if time.time() > discordoauth.expires:
-            if refresh_token(discordoauth):
-                print("Refreshed token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
-            else:
-                print("Failed to refresh token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
-    time.sleep(60)
+    while True:
+        time.sleep(60)
+        for discordoauth in DiscordOAuth.objects.all():
+            if time.time() > discordoauth.expires:
+                if refresh_token(discordoauth):
+                    print("Refreshed token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
+                else:
+                    print("Failed to refresh token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
 
 
 thread = threading.Thread(target=refresh_tokens)

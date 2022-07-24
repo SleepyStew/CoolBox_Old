@@ -107,6 +107,7 @@ def edit_reminder(request, id):
 
 def reminder_check():
     while True:
+        time.sleep(10)
         for reminder in Reminder.objects.all():
             if reminder.fulfilled:
                 continue
@@ -120,7 +121,6 @@ def reminder_check():
                              '&description=' + reminder.description)
                 print("Reminder: " + reminder.title + " has been fulfilled.")
                 reminder.delete()
-        time.sleep(10)
 
 
 thread = threading.Thread(target=reminder_check)
