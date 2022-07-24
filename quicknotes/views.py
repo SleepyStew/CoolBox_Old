@@ -2,17 +2,21 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
+
 from .models import Note
 
 # Create your views here.
 
 @login_required
+@require_http_methods(["GET"])
 def quicknotes(request):
     notes = request.user.note_set.all().order_by('display_id')
     return render(request, 'quicknotes/quicknotes.html', context={'notes': notes})
 
 
 @login_required
+@require_http_methods(["POST"])
 def create_note(request):
     if request.method == 'POST':
         note = Note(owner=request.user, content=request.POST.get('content'), display_id=request.user.note_set.all().order_by('display_id').first().display_id - 1)
@@ -22,6 +26,7 @@ def create_note(request):
 
 
 @login_required
+@require_http_methods(["POST"])
 def delete_note(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))
@@ -35,6 +40,7 @@ def delete_note(request):
 
 
 @login_required
+@require_http_methods(["POST"])
 def edit_note(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))
@@ -51,6 +57,7 @@ def edit_note(request):
 
 
 @login_required
+@require_http_methods(["POST"])
 def update_note_order(request):
     if request.method == 'POST':
         request_data = json.loads(request.body.decode('utf-8'))

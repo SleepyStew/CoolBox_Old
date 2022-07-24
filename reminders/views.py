@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_http_methods
+
 from discordoauth.models import DiscordOAuth
 # Create your views here.
 from discordoauth.views import get_discord_user
@@ -15,6 +17,7 @@ from .models import Reminder
 
 
 @login_required
+@require_http_methods(["GET"])
 def reminders(request):
     discord_authenticated = request.user.discordoauth_set.exists()
     reminders = []
@@ -25,6 +28,7 @@ def reminders(request):
 
 
 @login_required
+@require_http_methods(["POST"])
 def create_reminder(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -46,6 +50,7 @@ def create_reminder(request):
 
 
 @login_required
+@require_http_methods(["POST"])
 def delete_reminder(request):
     id = request.POST.get('id')
     if id is None or id == '':
@@ -61,6 +66,7 @@ def delete_reminder(request):
 
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def edit_reminder(request, id):
     if request.method == 'POST':
         try:

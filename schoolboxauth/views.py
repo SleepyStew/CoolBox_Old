@@ -3,12 +3,15 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.views.decorators.http import require_http_methods
+
 from .models import User
 
 
 # Create your views here.
 
 
+@require_http_methods(["GET", "POST"])
 def login(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -46,6 +49,7 @@ def login(request):
     return render(request, 'schoolboxauth/login.html')
 
 
+@require_http_methods(["GET"])
 def logout(request):
     if request.user.is_authenticated:
         auth_logout(request)

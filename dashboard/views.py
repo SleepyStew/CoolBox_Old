@@ -2,6 +2,8 @@ import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
+
 from schoolboxauth.models import User
 from schoolboxauth.views import logout
 import bs4
@@ -11,6 +13,7 @@ from .constants import friendly_subject_names
 # Create your views here.
 
 @login_required
+@require_http_methods(["GET"])
 def dashboard(request):
     cookies = {
         'PHPSESSID': f'{request.user.cookie}',

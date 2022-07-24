@@ -4,12 +4,15 @@ import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
+
 from .models import DiscordOAuth
 
 # Create your views here.
 
 
 @login_required
+@require_http_methods(["GET"])
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
         return redirect('/')
@@ -18,6 +21,7 @@ def discord_oauth_login(request):
 
 
 @login_required
+@require_http_methods(["GET"])
 def discord_oauth_redirect(request):
     code = request.GET.get('code')
     if code:
@@ -60,6 +64,7 @@ def get_discord_user(user):
 
 
 @login_required
+@require_http_methods(["GET"])
 def discord_actions(request):
     discord_user = get_discord_user(request.user)
     if discord_user is not False:
@@ -69,11 +74,13 @@ def discord_actions(request):
 
 
 @login_required
+@require_http_methods(["GET"])
 def discord_invite(request):
     return redirect('https://discord.com/invite/86f8YEtTa6')
 
 
 @login_required
+@require_http_methods(["GET"])
 def discord_oauth_logout(request):
     if request.user.discordoauth_set.exists():
         for discordoauth in request.user.discordoauth_set.all():
