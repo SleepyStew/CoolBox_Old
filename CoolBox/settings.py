@@ -29,7 +29,7 @@ SECRET_KEY = environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(environ.get("DEBUG")))
 
-APP_URL = "https://coolbox.lol/"
+APP_URL = "https://coolbox.lol"
 
 CSRF_TRUSTED_ORIGINS = [APP_URL]
 
@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 if DEBUG:
     print("Debug Server")
     STATIC_ROOT = './static'
-    APP_URL = "http://127.0.0.1/"
+    APP_URL = "http://127.0.0.1"
     CSRF_TRUSTED_ORIGINS = [APP_URL]
 else:
     print("Production Server")

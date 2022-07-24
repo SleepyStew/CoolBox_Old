@@ -20,7 +20,7 @@ from .models import DiscordOAuth
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
         return redirect(reverse('root'))
-    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=' + APP_URL.replace('/', '%2F') + 'discord%2Foauth%2Fredirect'
+    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=' + APP_URL.replace('/', '%2F') + '%2Fdiscord%2Foauth%2Fredirect'
                     '&response_type=code&scope=identify')
 
 
@@ -34,7 +34,7 @@ def discord_oauth_redirect(request):
             'client_secret': environ.get("CLIENT_SECRET"),
             'grant_type': 'authorization_code',
             'code': code,
-            'redirect_uri': APP_URL + 'discord/oauth/redirect',
+            'redirect_uri': APP_URL + '/discord/oauth/redirect',
             'scope': 'identify',
         }
         headers = {
