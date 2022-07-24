@@ -23,8 +23,8 @@ def dashboard(request):
         messages.error(request, "Your Schoolbox session has expired. Please log in again.")
         logout(request)
         return redirect("/")
-    duework = get_upcoming_due_work(response, request.user)
-    timetable = get_timetable(response, request.user)
+    duework = get_upcoming_due_work(response)
+    timetable = get_timetable(response)
     timetable_headers = ["<div class=\"timetable-top\">Homegroup<br>8:40am-8:55am</div>", "<div class=\"timetable-top\">Period 1<br>9:00am-10:10am</div>",
                          "<div class=\"timetable-top\">Period 2<br>10:30am-11:40am</div>", "<div class=\"timetable-top\">Period 3<br>11:45am-12:55pm</div>",
                          "<div class=\"timetable-top\">Period 4<br>1:50pm-3:05pm</div>"]
@@ -35,7 +35,7 @@ def dashboard(request):
     return render(request, 'dashboard/dashboard.html', context={'duework': duework, 'timetable': ziptable})
 
 
-def get_upcoming_due_work(response, current_user):
+def get_upcoming_due_work(response):
 
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
 
@@ -79,7 +79,7 @@ def get_upcoming_due_work(response, current_user):
         return None
 
 
-def get_timetable(response, current_user):
+def get_timetable(response):
 
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
 

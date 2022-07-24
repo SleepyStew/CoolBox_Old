@@ -1,5 +1,6 @@
 import time
 import threading
+from os import environ
 
 import requests
 from django.contrib import messages
@@ -114,7 +115,7 @@ def reminder_check():
                 discord_user = get_discord_user(reminder.owner)
                 if not discord_user:
                     continue
-                requests.get('http://192.168.50.121:30022/?user=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title +
+                requests.get(environ.get('DISCORD_BOT_URL') + '?user=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title +
                              '&description=' + reminder.description)
                 print("Reminder: " + reminder.title + " has been fulfilled.")
                 reminder.delete()
