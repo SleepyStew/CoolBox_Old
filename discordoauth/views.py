@@ -122,7 +122,7 @@ def refresh_tokens():
                 if refresh_token(discordoauth):
                     print("Refreshed token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
                 else:
-                    print("Failed to refresh token for " + discordoauth.user)
+                    print("Failed to refresh token for " + str(discordoauth.user))
                     discordoauth.delete()
 
 

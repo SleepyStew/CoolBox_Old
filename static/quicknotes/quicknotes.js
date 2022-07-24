@@ -90,9 +90,6 @@ function updateDisplayOrder() {
 let cards = document.querySelectorAll('.list-group-item');
 let lists = document.querySelectorAll('.list-group');
 
-console.log(cards)
-console.log(lists)
-
 cards.forEach((card)=>{
     registerEventsOnCard(card);
 });
@@ -130,7 +127,6 @@ function getCardAfterDraggingCard(list, yDraggingCard){
 }
 
 function registerEventsOnCard(card){
-    console.log(card)
     card.getElementsByClassName("rearrange-button")[0].addEventListener('dragstart', ()=>{
         card.classList.add('dragging');
     });
