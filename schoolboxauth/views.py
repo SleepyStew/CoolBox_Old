@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .models import User
@@ -14,7 +15,7 @@ from .models import User
 @require_http_methods(["GET", "POST"])
 def login(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect(reverse('root'))
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -44,7 +45,7 @@ def login(request):
                 messages.success(request, f"Welcome to the CoolBox Dashboard, {user.name.split(' ')[0]}!")
 
             auth_login(request, user)
-            return redirect('/')
+            return redirect(reverse('root'))
 
     return render(request, 'schoolboxauth/login.html')
 
@@ -53,4 +54,4 @@ def login(request):
 def logout(request):
     if request.user.is_authenticated:
         auth_logout(request)
-    return redirect('/')
+    return redirect(reverse('root'))

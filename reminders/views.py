@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from discordoauth.models import DiscordOAuth
@@ -34,10 +35,10 @@ def create_reminder(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         if title == '' or title is None:
-            return redirect('/reminders/create')
+            return redirect(reverse('create_reminder'))
         time = request.POST.get('time')
         if time == '' or time is None:
-            return redirect('/reminders/create')
+            return redirect(reverse('create_reminder'))
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
         description = request.POST.get('description')
@@ -46,7 +47,7 @@ def create_reminder(request):
         reminder = Reminder(owner=request.user, due=due, title=title, description=description)
         reminder.save()
         messages.success(request, 'Reminder successfully created!')
-        return redirect('/reminders/')
+        return redirect(reverse('reminders'))
     return render(request, 'reminders/create_reminder.html')
 
 
@@ -55,15 +56,15 @@ def create_reminder(request):
 def delete_reminder(request):
     id = request.POST.get('id')
     if id is None or id == '':
-        return redirect('/reminders/')
+        return redirect(reverse('reminders'))
     try:
         reminder = Reminder.objects.get(id=id)
     except Reminder.DoesNotExist:
-        return redirect('/reminders/')
+        return redirect(reverse('reminders'))
     if reminder.owner == request.user:
         reminder.delete()
         messages.success(request, 'Reminder successfully deleted!')
-    return redirect('/reminders/')
+    return redirect(reverse('reminders'))
 
 
 @login_required
@@ -73,14 +74,14 @@ def edit_reminder(request, id):
         try:
             reminder = Reminder.objects.get(id=id)
         except Reminder.DoesNotExist:
-            return redirect('/reminders/')
+            return redirect(reverse('reminders'))
         if reminder.owner == request.user:
             title = request.POST.get('title')
             if title == '' or title is None:
-                return redirect('/reminders/edit/' + id)
+                return redirect(reverse('edit_reminder') + id)
             time = request.POST.get('time')
             if time == '' or time is None:
-                return redirect('/reminders/edit/' + id)
+                return redirect(reverse('edit_reminder') + id)
             date = datetime.strptime(time, '%Y-%m-%d %H:%M')
             due = date.timestamp()
             description = request.POST.get('description')
@@ -91,14 +92,14 @@ def edit_reminder(request, id):
             reminder.description = description
             reminder.save()
             messages.success(request, 'Reminder successfully edited!')
-            return redirect('/reminders/')
+            return redirect(reverse('reminders'))
     else:
         try:
             reminder = Reminder.objects.get(id=id)
         except Reminder.DoesNotExist:
-            return redirect('/reminders/')
+            return redirect(reverse('reminders'))
         if reminder.owner != request.user:
-            return redirect('/reminders/')
+            return redirect(reverse('reminders'))
         if request.method == 'POST':
             pass
         return render(request, 'reminders/edit_reminder.html', context={'reminder': reminder})

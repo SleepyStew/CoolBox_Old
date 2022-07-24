@@ -2,6 +2,7 @@ import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from schoolboxauth.models import User
@@ -22,7 +23,7 @@ def dashboard(request):
     if check_logout(response):
         messages.error(request, "Your Schoolbox session has expired. Please log in again.")
         logout(request)
-        return redirect("/")
+        return redirect(reverse('root'))
     duework = get_upcoming_due_work(response)
     timetable = get_timetable(response)
     timetable_headers = ["<div class=\"timetable-top\">Homegroup<br>8:40am-8:55am</div>", "<div class=\"timetable-top\">Period 1<br>9:00am-10:10am</div>",

@@ -20,7 +20,7 @@ from django.urls import path, include
 from . import root
 
 urlpatterns = [
-    path('', root.root),
+    path('', root.root, name='root'),
     path('auth/', include('schoolboxauth.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('quick-notes/', include('quicknotes.urls')),
@@ -32,7 +32,7 @@ urlpatterns = [
 
 
 def error_404(request, exception):
-    return redirect('/')
+    return redirect(reverse('root'))
 
 
 handler404 = 'CoolBox.urls.error_404'

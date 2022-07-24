@@ -4,6 +4,7 @@ import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .models import DiscordOAuth
@@ -15,7 +16,7 @@ from .models import DiscordOAuth
 @require_http_methods(["GET"])
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
-        return redirect('/')
+        return redirect(reverse('root'))
     return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=https%3A%2F%2Fnew.coolbox.lol%2Fdiscord%2Foauth%2Fredirect'
                     '&response_type=code&scope=identify')
 
@@ -50,7 +51,7 @@ def discord_oauth_redirect(request):
         else:
             messages.error(request, "Failed to authenticate with Discord.")
             print(response.text)
-    return redirect('/discord/')
+    return redirect(reverse('discord'))
 
 
 def get_discord_user(user):
@@ -86,4 +87,4 @@ def discord_oauth_logout(request):
         for discordoauth in request.user.discordoauth_set.all():
             discordoauth.delete()
         messages.success(request, "Successfully unlinked Discord account.")
-    return redirect('/discord/')
+    return redirect(reverse('discord'))
