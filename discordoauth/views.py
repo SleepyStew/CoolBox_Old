@@ -1,3 +1,4 @@
+import time
 from os import environ
 
 import requests
@@ -45,7 +46,7 @@ def discord_oauth_redirect(request):
                 user=request.user,
                 access_token=response.json()['access_token'],
                 refresh_token=response.json()['refresh_token'],
-                expires_in=response.json()['expires_in']
+                expires=time.time() + response.json()['expires_in'] - 600
             )
             discordoauth.save()
         else:
@@ -77,7 +78,6 @@ def discord_actions(request):
 @login_required
 @require_http_methods(["GET"])
 def discord_invite(request):
-    refresh_token(request.user.discordoauth_set.first())
     return redirect('https://discord.com/invite/86f8YEtTa6')
 
 
@@ -106,8 +106,17 @@ def refresh_token(user):
     if response.status_code == 200:
         print(response.json())
         user.access_token = response.json()['access_token']
-        user.expires_in = response.json()['expires_in']
+        user.expires = time.time() + response.json()['expires_in'] - 600
         user.refresh_token = response.json()['refresh_token']
         user.save()
         return True
     return False
+
+
+def refresh_tokens():
+    for discordoauth in DiscordOAuth.objects.all():
+        if time.time() > discordoauth.expires:
+            if refresh_token(discordoauth):
+                print("Refreshed token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
+            else:
+                print("Failed to refresh token for " + get_discord_user(discordoauth.user)['username'] + '#' + get_discord_user(discordoauth.user)['discriminator'])
