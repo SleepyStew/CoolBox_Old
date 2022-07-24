@@ -20,8 +20,7 @@ from .models import DiscordOAuth
 def discord_oauth_login(request):
     if request.user.discordoauth_set.exists():
         return redirect(reverse('root'))
-    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=' + APP_URL.replace('/', '%2F') + '%2Fdiscord%2Foauth%2Fredirect'
-                    '&response_type=code&scope=identify')
+    return redirect('https://discord.com/api/oauth2/authorize?client_id=999205944133177365&redirect_uri=' + APP_URL.replace('/', '%2F').replace(':', '%3A') + '%2Fdiscord%2Foauth%2Fredirect&response_type=code&scope=identify')
 
 
 @login_required
