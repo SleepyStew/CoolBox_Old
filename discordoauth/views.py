@@ -77,6 +77,7 @@ def discord_actions(request):
 @login_required
 @require_http_methods(["GET"])
 def discord_invite(request):
+    refresh_token(request.user.discordoauth_set.first())
     return redirect('https://discord.com/invite/86f8YEtTa6')
 
 
@@ -88,3 +89,25 @@ def discord_oauth_logout(request):
             discordoauth.delete()
         messages.success(request, "Successfully unlinked Discord account.")
     return redirect(reverse('discord'))
+
+
+def refresh_token(user):
+    data = {
+        'client_id': '999205944133177365',
+        'client_secret': environ.get("CLIENT_SECRET"),
+        'grant_type': 'refresh_token',
+        'refresh_token': user.refresh_token,
+        'scope': 'identify',
+    }
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    response = requests.post('https://discordapp.com/api/oauth2/token', data=data, headers=headers)
+    if response.status_code == 200:
+        print(response.json())
+        user.access_token = response.json()['access_token']
+        user.expires_in = response.json()['expires_in']
+        user.refresh_token = response.json()['refresh_token']
+        user.save()
+        return True
+    return False
