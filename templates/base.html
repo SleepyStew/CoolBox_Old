@@ -14,16 +14,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     {% compress css %}
-    <link rel="stylesheet" href="{% static "/packages/bootstrap/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "/base/base.css" %}">
-    {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{% static "/packages/bootstrap/css/bootstrap.min.css" %}">
+        <link rel="stylesheet" href="{% static "/base/base.css" %}">
+        {% block stylesheets %}{% endblock %}
     {% endcompress %}
 
-    <script src="{% static "/packages/bootstrap/js/bootstrap.min.js" %}"></script>
-
     {% compress js %}
-    <script defer src="{% static "/base/base.js" %}"></script>
-    {% block scripts %}{% endblock %}
+        <script src="{% static "/packages/bootstrap/js/bootstrap.min.js" %}"></script>
+        <script defer src="{% static "/base/base.js" %}"></script>
+        {% block scripts %}{% endblock %}
     {% endcompress %}
 </head>
 <body style="{% block content-css %}{% endblock %}">
