@@ -5,8 +5,20 @@
     <link rel="stylesheet" href="{% static "/reminders/reminders.css" %}">
 {% endblock %}
 {% block scripts %}
+    <script src="{% static "/reminders/reminders.js" %}"></script>
 {% endblock %}
 {% block content %}
+
+    <div id="confirm-delete" class="align-bottom text-center p-5 position-fixed cd-popup" style="background-color: #23272A; max-width: 650px; border-radius: 10px; z-index: 1; left: 0; right: 0; margin: 0 auto; display: none">
+        <h3 class="text-light mb-4" id="delete-title">Are you sure you want to delete this reminder?</h3>
+        <form method="POST" action="delete/">
+            {% csrf_token %}
+            <input type="hidden" name="id" id="delete-id" value=""/>
+            <button type="button" class="btn btn-primary mt-2" onclick="cancel_delete()">Cancel</button>
+            <button type="submit" class="btn btn-danger mt-2">Delete Reminder</button>
+        </form>>
+    </div>
+
     <h1 class="text-light fw-bold">Reminders</h1>
     {% if discord_authenticated %}
         <h5 class="text-light mb-3">Reminder alerts will be sent to your discord.</h5>
@@ -17,6 +29,8 @@
                         <h3 class="card-title">{{ reminder.title }}</h3>
                         <h5 class="card-text">{{ reminder.description }}</h5>
                         <h5 class="card-text">Date: {{ reminder.date }}</h5>
+                        <a href="edit/{{ reminder.id }}"><button class="btn btn-primary mt-2">Edit Reminder</button></a>
+                        <button class="btn btn-danger mt-2" onclick="delete_confirmation({{ reminder.id }}, '{{ reminder.title }}')">Delete Reminder</button>
                     </div>
                 </div>
             {% endif %}

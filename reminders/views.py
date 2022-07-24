@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
+from django.shortcuts import get_object_or_404
 from discordoauth.models import DiscordOAuth
 # Create your views here.
 from discordoauth.views import get_discord_user
@@ -30,6 +31,8 @@ def create_reminder(request):
         if title == '' or title is None:
             return redirect('/reminders/create')
         time = request.POST.get('time')
+        if time == '' or time is None:
+            return redirect('/reminders/create')
         date = datetime.strptime(time, '%Y-%m-%d %H:%M')
         due = date.timestamp()
         description = request.POST.get('description')
@@ -40,6 +43,58 @@ def create_reminder(request):
         messages.success(request, 'Reminder successfully created!')
         return redirect('/reminders/')
     return render(request, 'reminders/create_reminder.html')
+
+
+@login_required
+def delete_reminder(request):
+    id = request.POST.get('id')
+    if id is None or id == '':
+        return redirect('/reminders/')
+    try:
+        reminder = Reminder.objects.get(id=id)
+    except Reminder.DoesNotExist:
+        return redirect('/reminders/')
+    if reminder.owner == request.user:
+        reminder.delete()
+        messages.success(request, 'Reminder successfully deleted!')
+    return redirect('/reminders/')
+
+
+@login_required
+def edit_reminder(request, id):
+    if request.method == 'POST':
+        try:
+            reminder = Reminder.objects.get(id=id)
+        except Reminder.DoesNotExist:
+            return redirect('/reminders/')
+        if reminder.owner == request.user:
+            title = request.POST.get('title')
+            if title == '' or title is None:
+                return redirect('/reminders/edit/' + id)
+            time = request.POST.get('time')
+            if time == '' or time is None:
+                return redirect('/reminders/edit/' + id)
+            date = datetime.strptime(time, '%Y-%m-%d %H:%M')
+            due = date.timestamp()
+            description = request.POST.get('description')
+            if description == '' or description is None:
+                description = 'No description'
+            reminder.title = title
+            reminder.due = due
+            reminder.description = description
+            reminder.save()
+            messages.success(request, 'Reminder successfully edited!')
+            return redirect('/reminders/')
+    else:
+        try:
+            reminder = Reminder.objects.get(id=id)
+        except Reminder.DoesNotExist:
+            return redirect('/reminders/')
+        if reminder.owner != request.user:
+            return redirect('/reminders/')
+        if request.method == 'POST':
+            pass
+        return render(request, 'reminders/edit_reminder.html', context={'reminder': reminder})
 
 
 def reminder_check():
