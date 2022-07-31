@@ -6,8 +6,8 @@ body {
 }
 #navbar {
     background-color: #5865F2;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
