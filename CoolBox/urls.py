@@ -28,6 +28,7 @@ urlpatterns = [
     path('reminders/', include('reminders.urls')),
     path('discord/', include('discordoauth.urls')),
     path('admin/', admin.site.urls),
+    path('robots.txt', root.robots, name='robots'),
 ]
 
 
