@@ -67,6 +67,9 @@ body {
 #sidebar a span {
     font-size: 28px;
 }
+#discord-icon {
+    transform: translate(0px, -4px);
+}
 .active-icon {
     border-left: #6610f2 solid 3px !important;
     border-radius: 4px;
