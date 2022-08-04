@@ -44,7 +44,12 @@ def create_reminder(request):
         description = request.POST.get('description')
         if description == '' or description is None:
             description = 'No description'
-        reminder = Reminder(owner=request.user, due=due, title=title, description=description)
+        repeat = request.POST.get('repeat')
+        if repeat is None or not repeat.isdigit() or int(repeat) not in [0, 1, 2, 3]:
+            repeat = 0
+        else:
+            repeat = int(repeat)
+        reminder = Reminder(owner=request.user, due=due, title=title, description=description, repeat=repeat)
         reminder.save()
         messages.success(request, 'Reminder successfully created!')
         return redirect(reverse('reminders'))
@@ -87,9 +92,15 @@ def edit_reminder(request, id):
             description = request.POST.get('description')
             if description == '' or description is None:
                 description = 'No description'
+            repeat = request.POST.get('repeat')
+            if repeat is None or not repeat.isdigit() or int(repeat) not in [0, 1, 2, 3]:
+                repeat = 0
+            else:
+                repeat = int(repeat)
             reminder.title = title
             reminder.due = due
             reminder.description = description
+            reminder.repeat = repeat
             reminder.save()
             messages.success(request, 'Reminder successfully edited!')
             return redirect(reverse('reminders'))
@@ -109,18 +120,24 @@ def reminder_check():
     while True:
         time.sleep(10)
         for reminder in Reminder.objects.all():
-            if reminder.fulfilled:
-                continue
             if reminder.due < datetime.now().timestamp():
-                reminder.fulfilled = True
-                reminder.save()
                 discord_user = get_discord_user(reminder.owner)
-                if not discord_user:
-                    continue
-                requests.get(environ.get('DISCORD_BOT_URL') + '?user=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title +
-                             '&description=' + reminder.description)
+                if discord_user:
+                    requests.get(
+                        environ.get('DISCORD_BOT_URL') + '?user=' + discord_user['id'] + '&name=' + reminder.owner.name.split(' ')[0] + '&title=' + reminder.title +
+                        '&description=' + reminder.description)
                 print("Reminder: " + reminder.title + " has been fulfilled.")
-                reminder.delete()
+                if reminder.repeat == 0:
+                    reminder.delete()
+                elif reminder.repeat == 1:
+                    reminder.due = reminder.due + 86400
+                    reminder.save()
+                elif reminder.repeat == 2:
+                    reminder.due = reminder.due + 604800
+                    reminder.save()
+                elif reminder.repeat == 3:
+                    reminder.due = reminder.due + 31536000
+                    reminder.save()
 
 
 thread = threading.Thread(target=reminder_check)

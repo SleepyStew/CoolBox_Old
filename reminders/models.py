@@ -10,5 +10,5 @@ class Reminder(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey('schoolboxauth.User', on_delete=models.CASCADE)
     display_id = models.IntegerField(default=0)
-    fulfilled = models.BooleanField(default=False)
+    repeat = models.IntegerField(default=0)
     due = models.IntegerField(default=0)

@@ -12,23 +12,25 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <div class="mx-auto align-bottom text-center p-5" style="background-color: #23272A; max-width: 650px; border-radius: 10px;">
-            <h1 class="text-light fs-3" align="center">Create a new reminder</h1>
-            <div class="input-group pt-4 px-2">
+        <div class="mx-auto align-bottom py-4 px-5 text-center" style="background-color: #23272A; max-width: 650px; border-radius: 10px;">
+            <h1 class="text-light fs-2 pt-2 mb-2" align="center">Create a new reminder</h1>
+            <div class="input-group pt-2 px-2">
+                <label for="inputGroupSelect04" class="text-light fs-3" style="width: 100%;">Type</label>
                 <select class="custom-select rounded p-2 text-light fs-5" id="inputGroupSelect04" name="type" style="width: 100%; background-color: #23272A;">
                   <option value="custom" {% if reminder.type == "custom" %}selected{% endif %}>Custom Reminder.</option>
                   <option value="homework" disabled {% if reminder.type == "homework" %}selected{% endif %}>Homework Reminder.</option>
                   <option value="assessment" disabled {% if reminder.type == "assessment" %}selected{% endif %}>Assessment Reminder.</option>
                 </select>
             </div>
-            <div class="form-group pt-4 px-2">
+            <div class="form-group pt-2 px-2">
+                <label for="inputGroupSelect04" class="text-light fs-3" style="width: 100%;">Details</label>
                 <input required type="text" class="form-control text-white fs-3" id="title" name="title" placeholder="Reminder Name" style="background-color: #23272A;" maxlength=48>
             </div>
-            <div class="form-group pt-4 px-2">
+            <div class="form-group pt-3 px-2">
                 <textarea class="form-control text-white fs-5" id="description" name="description" placeholder="Reminder Description" style="background-color: #23272A;" maxlength="512"></textarea>
             </div>
-            <div class="form-group pt-4 px-2" style="position: relative">
-                <input class="form-control text-light" type="text" id="datetime" name="time" style="background-color: #23272A" />
+            <div class="form-group pt-2 px-2" style="position: relative">
+                <label for="datetime" class="text-light fs-3" style="width: 100%;">Remind Time</label><input class="form-control text-light" type="text" id="datetime" name="time" style="background-color: #23272A" />
             </div>
             <script>
                 $(document).ready(function() {
@@ -42,7 +44,16 @@
                     });
                 });
             </script>
-            <button type="submit" class="btn btn-primary mt-4 fs-4" style="background-color: #5865F2; border-color: #5865F2;">
+            <div class="input-group pt-2 px-2 mb-2">
+                <label for="inputGroupSelect04" class="text-light fs-3" style="width: 100%;">Repeat</label>
+                <select class="custom-select rounded p-2 text-light fs-5" id="inputGroupSelect04" name="repeat" style="width: 100%; background-color: #23272A;">
+                  <option value=0 {% if reminder.repeat == 0 %}selected{% endif %}>Never</option>
+                  <option value=1 {% if reminder.repeat == 1 %}selected{% endif %}>Daily</option>
+                  <option value=2 {% if reminder.repeat == 2 %}selected{% endif %}>Weekly</option>
+                  <option value=3 {% if reminder.repeat == 3 %}selected{% endif %}>Yearly</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4 fs-4 mb-2" style="background-color: #5865F2; border-color: #5865F2;">
                 Create
             </button>
         </div>

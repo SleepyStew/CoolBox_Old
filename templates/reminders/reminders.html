@@ -29,6 +29,20 @@
                         <h3 class="card-title">{{ reminder.title }}</h3>
                         <h5 class="card-text">{{ reminder.description }}</h5>
                         <h5 class="card-text">Date: {{ reminder.date }}</h5>
+                        <h5 class="card-text">Repeats:
+                            {% if reminder.repeat == 0 %}
+                                Never
+                            {% endif %}
+                            {% if reminder.repeat == 1 %}
+                                Daily
+                            {% endif %}
+                            {% if reminder.repeat == 2 %}
+                                Weekly
+                            {% endif %}
+                            {% if reminder.repeat == 3 %}
+                                Yearly
+                            {% endif %}
+                        </h5>
                         <a href="edit/{{ reminder.id }}"><button class="btn btn-primary mt-2">Edit Reminder</button></a>
                         <button class="btn btn-danger mt-2" onclick="delete_confirmation({{ reminder.id }}, '{{ reminder.title }}')">Delete Reminder</button>
                     </div>
