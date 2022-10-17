@@ -33,6 +33,8 @@ APP_URL = "https://coolbox.lol"
 
 CSRF_TRUSTED_ORIGINS = [APP_URL]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
