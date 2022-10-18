@@ -15,7 +15,7 @@ body {
     position: absolute;
     left:50%;
     transform: translate(calc(-50% + 2vw), 0);
-    width: 50px;
+    width: 65px;
     height: auto;
 }
 #footer {
